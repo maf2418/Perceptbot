@@ -81,3 +81,7 @@ There are several places we can recommend changes or improvements;
  * Explore further abstraction away from the TwoWheelDriveChain into the
    abstract superclass
  * Try and actually run the code! :wink:
+
+## TODO
+
+ * re-add tests.sh script from the Gitlab repo

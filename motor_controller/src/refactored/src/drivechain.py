@@ -6,7 +6,6 @@ import rospkg
 import tf
 import numpy as np
 
-#from ABC import abstractmethod  # TODO currently not using this
 from wheelencoder2 import Encoder
 from odometry2 import OdometryPublisher, TwoWheelOdometryCalculator
 from pidcontroller2 import PIDController
@@ -24,10 +23,9 @@ class DriveChainLayout:
     def set_active_controller(self, controller=5):
         self.active_controller = controller
 
-    @staticmethod # TODO why?
+    @staticmethod 
     def load_encoder_settings(no_of_wheels):
         try:
-            # do this the old-fashion way >)<
             with open(ENCODER_SETTINGS_FILE) as f:
                 encoder_pin_list = [int(x) for x in next(f).split()]
             print(encoder_pin_list)
@@ -38,7 +36,7 @@ class DriveChainLayout:
         except:
             RuntimeError
 
-# TODO I'd still like to put a lot of this stuff in a superclass.
+
 class TwoWheelDriveChain(DriveChainLayout):
     ''' 
     This is the only (sub)class which knows about
@@ -72,7 +70,7 @@ class TwoWheelDriveChain(DriveChainLayout):
         encoder_list = DriveChainLayout.load_encoder_settings(2)
         l_encoder = encoder_list[0]
         r_encoder = encoder_list[1]
-        l_encoder.set_name("left_encoder") # do encoders need names?
+        l_encoder.set_name("left_encoder") 
         r_encoder.set_name("right_encoder")
         self.l_controller.set_encoder(l_encoder)
         self.r_controller.set_encoder(r_encoder)

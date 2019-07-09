@@ -28,7 +28,6 @@ class Encoder:
         self.time_tick = rospy.get_rostime()
         #print("tick")
 
-    # TODO probably get rid of this
     def get_name(self):
         return self.name
 

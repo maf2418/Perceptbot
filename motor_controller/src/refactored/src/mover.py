@@ -6,8 +6,12 @@ import rospy
 
 from geometry_msgs.msg import Twist
 
-# global constants (numbers are BOARD numberings)
-# speeds are % of duty cycle
+#
+## global constants 
+#
+##  numbers are GPIO.BOARD numberings
+##  speeds are % of duty cycle
+#
 
 PWM_LEFT = 33
 PWM_RIGHT = 12
@@ -18,7 +22,6 @@ GPIO_MOTOR4 = 18
 PWM_FREQ = 25
 
 class Mover(object):
-    # it's not possible for us to test __init__ magic methods :(
     def __init__(self, debug=False):
         self.debug = debug
         GPIO.setwarnings(False)
@@ -27,6 +30,7 @@ class Mover(object):
         GPIO.setup(GPIO_MOTOR2, GPIO.OUT)
         GPIO.setup(GPIO_MOTOR3, GPIO.OUT)
         GPIO.setup(GPIO_MOTOR4, GPIO.OUT)
+
         # PWM pins
         GPIO.setup(PWM_LEFT,GPIO.OUT)  
         GPIO.setup(PWM_RIGHT,GPIO.OUT)

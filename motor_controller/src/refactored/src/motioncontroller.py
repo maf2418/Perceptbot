@@ -30,8 +30,7 @@ class MotionController:
     # this is the only part which (sadly) knows about TwoWheelDriveChain
     def load_drivechains(self):
         try:
-            # TODO rename this file "drivechain_settings"
-            settings = np.loadtxt(self.path + "pid_settings", ndmin=2)
+            settings = np.loadtxt(self.path + "drivechain_settings", ndmin=2)
             drivechain_list = [TwoWheelDriveChain(*dc) for dc in settings.tolist()]
             if len(drivechain_list) < 10:
                 drivechain_list.extend([TwoWheelDriveChain() for i in range(10 - len(drivechain_list))])
@@ -51,7 +50,6 @@ class MotionController:
                   "Default PID settings loaded - will learn from scratch")
         return drivechain_list
     
-    # TODO rename this file "drivechain_settings"
     def save_settings(self):
         settings = np.array([dc.get_settings() for dc in self.drivechain_list])
         np.savetxt(self.path + "pid_settings", settings, fmt="%1.3f",

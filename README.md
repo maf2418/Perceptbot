@@ -2,7 +2,7 @@
 
 This repository is the companion repository for the Project Perceptbot (paper forthcoming).
 
-![perceptbot](images/perceptbot.jpeg)
+![perceptbot](https://github.com/maf2418/Perceptbot/tree/master/images)
 
 ## Table of contents
 

@@ -33,6 +33,7 @@ that make up the Perceptbot's motor controller *prior* to refactoring. The
 second diagram shows the state of play *post*-refactor.
 
 ![Pre-refactor UML](https://github.com/maf2418/Perceptbot/tree/master/images/uml_0.jpeg)
+
 ![Post-refactor UML](https://github.com/maf2418/Perceptbot/tree/master/images/uml_1.jpeg)
 
 As you can see from the first diagram, out expressed a number of important principles, but because it

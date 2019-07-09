@@ -1,22 +1,27 @@
-# How to use these files
+# Perceptbot Motor Controller
 
-Anything you do depends on `roscore`. So open up a terminal and enter: `$ roscore`
+This directory contains the source code for the Perceptbot motor controller. 
+
+A refactoring of this code is located in the `refactored/` directory.
+
+## How to use these files
+
+Anything you do depends on `roscore`. Unless you are launching the Perceptbot using the `main.launch` file, `roscore` will not be running by default. So open up a terminal and enter: `$ roscore`
 
 ## teleop and motor controller
 
-In a terminal: 
+It is possible to use a `teleop` script to control the Perceptbot manually,
+using keyboard input. If you'd like to do this, make sure that `roscore` is
+running (see above), and then run the motor controller script, using
+`roslaunch`.
 
-`$ cd ~/overlay_ws/src/teleop_twist_keyboard/` `$ rosrun teleop_twist_keyboard teleop_twist_keyboard.py`
+The motor controller listens for messages over `cmd_vel`. As the `teleop`
+script broadcasts over `cmd_vel`, all you now need to do is run the `teleop`
+script. To do this, open up another terminal, switch to the
+`teleop_twist_keyboard` directory (the location of `teleop_twist_keyboard.py`)
+and type
 
-In another terminal: `$ cd ~/overlay_ws/src/motor_controller/src` `$ python commander.py`
-
-The `teleop_twist_keyboard.py` script is what we are using to pass keyboard
-input to cmd\_vel. Output is represented as a Twist object; each Twist object
-has two Vector3 fields.  You can instead use the navigation stack to pass
-cmd\_vel Twists, the controller.py script will listen to this too.
-
-The Listener object in move.py listens to cmd\_vel and then maps these Twist
-values into motor controls
+`$ rosrun teleop_twist_keyboard teleop_twist_keyboard.py`
 
 ## wheel odometry
 
@@ -24,8 +29,4 @@ Perceptbot wheel odometry is managed by two nodes which broadcast three topics;
  * `wheelencoder.py` broadcasts a separate topic for left and right wheel encoders, `\lwheel` and `\rwheel`
  * `odom_calculator.py` subscribes to both of these topics and uses this information to perform wheel odometry calculations. It broadcasts the transform over tf and also a topic called `wheel_odom`
 
-To run both of these nodes, make sure that `roscore` is first running (see above). Then open a terminal and run `$ python wheelencoder.py`. When the `\lwheel` and `\rwheel` topics are broadcasting, open another terminal and run `$ python odom_calculator.py`.
-
-Of course, you must be in `~/overlay_ws/src/motor_controller/src` in order to be able to run these scripts.
-
-TODO: incorporate launching of these nodes into main.launch (once debugged!). Also incorporate slippage correction data from laser.
+You can launch all of these nodes from the `main.launch` file.

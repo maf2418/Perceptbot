@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>joystick</title>
+</head>
+<body>
+    <div id="result"></div>
+<script src="virtualjoystick.js/virtualjoystick.js"></script>
+<script src="lib/roslib.js"></script>
+<script src="lib/joystick_message.js"></script>
+		<script>
+			console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
+	
+			var joystick	= new VirtualJoystick({
+				container	: document.getElementById('container'),
+                mouseSupport	: true,
+                stationaryBase	: true,
+                baseX		: 150,
+                baseY		: 800,
+                limitStickTravel: true,
+                stickRadius: 50
+            });
+            
+			joystick.addEventListener( 'touchStart', function(){ //'mousedown'
+                console.log('down');
+                pubMessage(joystick.deltaX(), joystick.deltaY());
+            
+            })
+			joystick.addEventListener('touchEnd', function(){ // 'mouseup'
+                console.log('up');
+                pubMessage(joystick.deltaX(), joystick.deltaY());
+
+                joystick._pressed = true;
+                joystick._move(0,0);
+                joystick._pressed = false;
+                print(0,0);
+			})
+
+            function print(deltaX, deltaY){
+                var outputEl	= document.getElementById('result');
+				outputEl.innerHTML	= '<b>Result:</b> '
+					+ ' dx:'+deltaX
+					+ ' dy:'+deltaY
+					+ (joystick.right()	? ' right'	: '')
+					+ (joystick.up()	? ' up'		: '')
+					+ (joystick.left()	? ' left'	: '')
+                    + (joystick.down()	? ' down' 	: '')	
+            }
+
+			setInterval(function(){ // writes and updates text of commands 
+				print(joystick.deltaX(), joystick.deltaY());
+                
+			}, 1/15 * 1000);
+        </script>
+        
+   </body>
+    </html>

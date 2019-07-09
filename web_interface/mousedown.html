@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>ROS</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <style>
+        div {
+            background-color: lightgrey;
+            width: 300px;
+            border: 15px solid green;
+            padding: 50px;
+            margin: 20px;
+        }
+    </style>
+
+</head>
+
+<body class="bg-light">
+
+    <!-- /**
+ * Internal use only
+ */
+ROS2D.PolygonMarker.prototype.createLineShape = function(startPoint, endPoint) {
+	var line = new createjs.Shape();
+//	line.graphics.setStrokeStyle(this.strokeSize);
+//	line.graphics.beginStroke(this.strokeColor);
+//	line.graphics.moveTo(startPoint.x, startPoint.y);
+//	line.graphics.lineTo(endPoint.x, endPoint.y);
+	this.editLineShape(line, startPoint, endPoint);
+	
+	var that = this;
+	line.addEventListener('mousedown', function(event) {
+		if (that.lineCallBack !== null && typeof that.lineCallBack !== 'undefined') {
+			that.lineCallBack('mousedown', event, that.lineContainer.getChildIndex(event.target));
+		}
+	});
+	
+	return line;
+}; -->
+
+    <div id="hehe">
+    </div>
+
+
+    <script>
+        var hehe = document.getElementById("hehe")
+
+        hehe.addEventListener('mousedown', function(event) {
+            console.log("mousedown", event)
+        });
+
+        hehe.addEventListener('dblclick', function(event) {
+            console.log("dblclick", event)
+        });
+    </script>
+</body>
+
+</html>

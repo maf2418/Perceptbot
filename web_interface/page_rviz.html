@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Second</title>
+    <!-- rvizweb -->
+    <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+    <link rel="import" href="bower_components/ros-websocket/ros-websocket.html" />
+    <link rel="import" href="bower_components/ros-rviz/ros-rviz.html" />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/page_header.css" />
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+        }
+        
+        #info {
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            padding: 5px;
+            text-align: center;
+        }
+        
+        #info a {
+            color: #66F;
+            text-decoration: none;
+        }
+        
+        #info a:hover {
+            text-decoration: underline;
+        }
+        
+        #container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+        }
+        
+        button {
+            background-color: rgb(255, 104, 104);
+            color: rgba(255, 255, 255, 0);
+            border: none;
+            height: 45px;
+            width: 80px;
+            padding: 20px 10px;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            color: rgba(180, 25, 25, 0.171);
+            background-color: rgba(247, 136, 84, 0.24);
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            top: 6px;
+            left: 10px;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .switch input {
+            opacity: 10;
+            width: 50;
+            height: 30;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+        
+        input:checked+.slider {
+            background-color: rgb(255, 82, 82);
+        }
+        
+        input:focus+.slider {
+            box-shadow: 0 0 1px rgb(255, 134, 134);
+        }
+        
+        input:checked+.slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+        /* Rounded sliders */
+        
+        .slider.round {
+            border-radius: 84px;
+        }
+        
+        .slider.round:before {
+            border-radius: 50%;
+        }
+        
+        .text {
+            display: none
+        }
+        
+        input:checked+.text {
+            display: inline-block
+        }
+        
+        .select-css {
+            display: block;
+            font-size: 15px;
+            font-weight: 700;
+            color: rgb(134, 134, 134);
+            background: rgb(206, 206, 206);
+            line-height: 1.3;
+            padding: .6em 1.4em .5em .8em;
+            width: 100%;
+            height: 40px;
+            max-width: 160px;
+            box-sizing: border-box;
+            /* margin: 5px; */
+            border: 0px solid rgb(216, 216, 216);
+            box-shadow: 0 1px 0 1px rgba(0, 0, 0, .04);
+            border-radius: 20px;
+        }
+        
+        .select-css::-ms-expand {
+            display: none;
+        }
+        
+        .select-css:hover {
+            border-color: #888;
+        }
+        
+        .select-css:focus {
+            border-color: rgb(78, 61, 61);
+            box-shadow: 0 0 2px 1px rgba(61, 81, 107, 0.418);
+            box-shadow: 0 0 0 2px -moz-mac-focusring;
+            color: #222;
+            outline: none;
+        }
+        
+        .select-css option {
+            font-weight: normal;
+            max-width: 10px;
+        }
+    </style>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <div class="header">
+        <div class="switch">
+            <input type="checkbox" name="toggle" id="mycheckbox" onclick="sendMessage()">
+            <label for="toggle">
+                <i class="bulb">
+                    <span class="bulb-center"></span>
+                    <span class="reflections">  </span>
+                </i>    
+            </label>
+        </div>
+        <a></a>
+        <a></a>
+        <a href="#default" class="logo">PerceptBot</a>
+        <div class="header-right">
+            <a></a>
+            <a></a>
+            <a></a>
+            <a></a>
+            <a href="page_info.html" data-target="0">info</a>
+            <a></a>
+            <a></a>
+            <a class="active" href="page_rviz.html" data-target="-1">rviz</a>
+            <a></a>
+            <a></a>
+            <a href="page_tf.html" data-target="1">TF</a>
+            <a></a>
+            <a></a>
+            <a></a>
+            <a></a>
+            <select class="select-css" id="state_switch">
+                <option value="explore">explore</option>
+                <option value="return_home">go home</option>
+            </select>
+        </div>
+    </div>
+
+    <iframe name="iframe2" id="bounded" class="p-1 bg-dark" frameborder="0" scrolling="no" width="300" height="300" style=" height:808; position: absolute; top: 100px; right: 40px; z-index: 99;" src="video.html" autoplay></iframe>
+    <iframe src="joystick_n.html" name="iframe2" id="bounded_" class="p-1 bg-dark" frameborder="0" scrolling="no" width="300" height="400" style=" height:808; position: absolute; bottom: 0px; left: 0px; z-index: 999;"></iframe>
+
+    <!-- rvizweb -->
+    <ros-websocket id="websocket"></ros-websocket>
+    <ros-rviz id="rviz"></ros-rviz>
+
+    <!-- scripts -->
+    <script>
+        var idle_state = true; // robot not moving, state is idle
+        var ros;
+
+        function sleep(milliseconds) {
+            var start = new Date().getTime();
+            for (var i = 0; i < 1e7; i++) {
+                if ((new Date().getTime() - start) > milliseconds) {
+                    break;
+                }
+            }
+        }
+
+        // window.onload = function() {
+        //     var ros = new ROSLIB.Ros({
+        //         // url: 'ws://localhost:9090' // rosbridge
+        //         url: "ws://192.168.1.67:9090" // rosbridge
+        //     })
+        //     console.log(ros);
+        // }
+
+        function sendMessage() {
+
+            var stateSwitch = document.getElementById("state_switch");
+
+
+            var checkBox = document.getElementById("mycheckbox");
+            var enableExplore = new ROSLIB.Topic({
+                ros: ros,
+                name: '/statemachine_message',
+                messageType: 'std_msgs/String'
+            });
+
+            var explore_message = new ROSLIB.Message({
+                data: 'e'
+            });
+
+            var home_message = new ROSLIB.Message({
+                data: 'h'
+            });
+
+            var idle_message = new ROSLIB.Message({
+                data: 'i'
+            });
+
+            // If the checkbox is checked, display the output text
+            if (checkBox.checked == true) {
+                console.log("activated");
+                if (stateSwitch.value == "explore") {
+                    console.log("&explore")
+                    z = 10
+                    while (z > 0) {
+                        enableExplore.publish(explore_message);
+                        sleep(1000);
+                        z = z - 1;
+                    }
+                }
+                if (stateSwitch.value == "return_home") {
+                    console.log("&return_home")
+                    enableExplore.publish(home_message);
+                }
+                idle_state = false;
+
+            } else {
+                console.log("DEactivated");
+                z = 10
+                while (z > 0) {
+                    enableExplore.publish(idle_message);
+                    sleep(1000);
+                    z = z - 1;
+                }
+                idle_state = true;
+            }
+        }
+        document.body.style.opacity = 0; // Hide body to prevent FOUC
+        window.addEventListener("WebComponentsReady", function() {
+            document.body.style.opacity = 1;
+
+            var websocket = document.getElementById("websocket");
+            var rviz = document.getElementById("rviz");
+
+            websocket.addEventListener("connection", function() {
+                console.log("Connected to the websocket server.");
+                console.log(websocket.ros);
+                rviz.ros = websocket.ros;
+            });
+            console.log("websocket.connect");
+            websocket.connect();
+
+            rviz.addEventListener("websocket-url-changed", function(evt) {
+                console.log("websocket-url-changed");
+                console.log(evt.detail.value);
+                websocket.url = evt.detail.value;
+                websocket.connect();
+            });
+        });
+    </script>
+
+    <!-- / joystick -->
+    <script src="lib/virtualjoystick.js"></script>
+
+    <!-- / rvizweb -->
+    <script src="lib/popper.js" crossorigin="anonymous"></script>
+
+    <!-- ros_bridge support -->
+    <script src="lib/roslib.js"></script>
+    <script src="lib/eventemitter2.js"></script>
+    <script src="lib/keyboardteleop.js"></script>
+    <script src="lib/nipplejs.js"></script>
+    <script src="lib/webui.js"></script>
+    <script scr="lib/dragiframe.js"></script>
+    <script src="lib/jquery-3.3.1.js"></script>
+    <script src="lib/main.js"></script>
+    <script>
+        var x, i, j, selElmnt, a, b, c;
+        /*look for any elements with the class "custom-select":*/
+        x = document.getElementsByClassName("custom-select");
+        for (i = 0; i < x.length; i++) {
+            selElmnt = x[i].getElementsByTagName("select")[0];
+            /*for each element, create a new DIV that will act as the selected item:*/
+            a = document.createElement("DIV");
+            a.setAttribute("class", "select-selected");
+            a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+            x[i].appendChild(a);
+            /*for each element, create a new DIV that will contain the option list:*/
+            b = document.createElement("DIV");
+            b.setAttribute("class", "select-items select-hide");
+            for (j = 1; j < selElmnt.length; j++) {
+                /*for each option in the original select element,
+                create a new DIV that will act as an option item:*/
+                c = document.createElement("DIV");
+                c.innerHTML = selElmnt.options[j].innerHTML;
+                c.addEventListener("click", function(e) {
+                    /*when an item is clicked, update the original select box,
+                    and the selected item:*/
+                    var y, i, k, s, h;
+                    s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+                    h = this.parentNode.previousSibling;
+                    for (i = 0; i < s.length; i++) {
+                        if (s.options[i].innerHTML == this.innerHTML) {
+                            s.selectedIndex = i;
+                            h.innerHTML = this.innerHTML;
+                            y = this.parentNode.getElementsByClassName("same-as-selected");
+                            for (k = 0; k < y.length; k++) {
+                                y[k].removeAttribute("class");
+                            }
+                            this.setAttribute("class", "same-as-selected");
+                            break;
+                        }
+                    }
+                    h.click();
+                });
+                b.appendChild(c);
+            }
+            x[i].appendChild(b);
+            a.addEventListener("click", function(e) {
+                /*when the select box is clicked, close any other select boxes,
+                and open/close the current select box:*/
+                e.stopPropagation();
+                closeAllSelect(this);
+                this.nextSibling.classList.toggle("select-hide");
+                this.classList.toggle("select-arrow-active");
+            });
+        }
+
+        function closeAllSelect(elmnt) {
+            /*a function that will close all select boxes in the document,
+            except the current select box:*/
+            var x, y, i, arrNo = [];
+            x = document.getElementsByClassName("select-items");
+            y = document.getElementsByClassName("select-selected");
+            for (i = 0; i < y.length; i++) {
+                if (elmnt == y[i]) {
+                    arrNo.push(i)
+                } else {
+                    y[i].classList.remove("select-arrow-active");
+                }
+            }
+            for (i = 0; i < x.length; i++) {
+                if (arrNo.indexOf(i)) {
+                    x[i].classList.add("select-hide");
+                }
+            }
+        }
+        /*if the user clicks anywhere outside the select box,
+        then close all select boxes:*/
+        document.addEventListener("click", closeAllSelect);
+    </script>
+</body>
+
+</html>

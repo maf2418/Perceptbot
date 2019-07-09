@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Second</title>
+    <!-- rvizweb -->
+    <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+    <link rel="import" href="bower_components/ros-websocket/ros-websocket.html" />
+    <link rel="import" href="bower_components/ros-rviz/ros-rviz.html" />
+    <!-- / rvizweb -->
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/page_header.css" />
+
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="header">
+        <a href="#default" class="logo">PerceptBot</a>
+        <div class="header-right">
+            <a href="page-info.html" data-target="-1">info</a>
+            <a></a> <a href="index.html" data-target="0">camera</a>
+            <a></a>
+            <a class="active" href="page-right.html" data-target="1">rviz</a>
+            <a></a> <a href="page_temp.html" data-target="2">temp</a>
+            <a></a>
+
+        </div>
+    </div>
+
+    <!-- rvizweb -->
+    <ros-websocket id="websocket"></ros-websocket>
+    <ros-rviz id="rviz"></ros-rviz>
+    <!-- / rvizweb -->
+
+
+    <!-- <div style="padding-left:20px">
+          <p></p>
+          <p></p>
+        </div> -->
+
+
+    <!-- <ul class="nav">
+        <li><a href="page-info.html" data-target="-1">Left</a></li>
+        <li><a href="index.html" data-target="0">Home</a></li>
+        <li><a href="page-right.html" data-target="1">Right</a></li>
+      </ul> -->
+
+    <div class="sceneElement" data-viewport="1">
+
+
+
+
+        <!-- <h1>Right page</h1>
+        <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea
+          commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat,
+          vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit
+          praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
+        <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer
+          possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
+          tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
+          tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+      </div>
+    </div> -->
+
+        <!-- rvizweb -->
+        <script>
+            document.body.style.opacity = 0; // Hide body to prevent FOUC
+            window.addEventListener('WebComponentsReady', function() {
+                document.body.style.opacity = 1;
+
+                var websocket = document.getElementById('websocket');
+                var rviz = document.getElementById('rviz');
+
+                websocket.addEventListener('connection', function() {
+                    console.log('Connected to the websocket server.');
+                    console.log(websocket.ros);
+                    rviz.ros = websocket.ros;
+                });
+                console.log('websocke.connect')
+                websocket.connect();
+
+                rviz.addEventListener('websocket-url-changed', function(evt) {
+                    console.log('websocket-url-changed');
+                    console.log(evt.detail.value);
+                    websocket.url = evt.detail.value;
+                    websocket.connect();
+                });
+            });
+        </script>
+
+
+        <!-- / rvizweb -->
+
+        <!-- Scripts -->
+        <script src="lib/jquery-3.3.1.js"></script>
+        <script src="lib/main.js"></script>
+    </div>
+</body>
+
+</html>

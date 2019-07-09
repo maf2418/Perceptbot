@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>ROS</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css" crossorigin="anonymous" />
+
+    <!-- js variable that takes value of IP address -->
+    <!-- var use_robot_IP = location.hostname; -->
+    <script src="lib/_IP_Robot.js"></script>
+</head>
+
+<body class="bg-light">
+
+    <!-- JOYSTICK -->
+    <div class="row my-4">
+        <div class="col" style="top: 20px;margin-top: 30px;">
+            <div class="d-flex justify-content-center" style="width: 210px; height: 210px;">
+                <div id="joystick"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="lib/jquery-3.3.1.js" crossorigin="anonymous"></script>
+    <script src="lib/popper.js" crossorigin="anonymous"></script>
+    <script src="lib/roslib.js"></script>
+    <script src="lib/eventemitter2.js"></script>
+    <script src="lib/keyboardteleop.js"></script>
+    <script src="lib/nipplejs.js"></script>
+    <script src="lib/joystick_n.js"></script>
+    <script>
+        window.onload = () => {
+            initJoystick();
+        }
+    </script>
+</body>
+
+</html>

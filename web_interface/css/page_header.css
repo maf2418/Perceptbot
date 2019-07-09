@@ -1,0 +1,56 @@
+* {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .header {
+    overflow: hidden;
+    background-color: #e4e4e4;
+    padding: 12px 15px;
+  }
+
+  .header a {
+    float: left;
+    color: rgb(121, 121, 121);
+    text-align: center;
+    padding: 10.2px;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 25px;
+    border-radius: 2px;
+  }
+
+  .header a.logo {
+    font-size: 25px;
+    font-weight: bold;
+  }
+
+  .header a:hover {
+    color: rgb(56, 56, 56);
+}
+
+  .header a.active {
+    background-color: rgb(163, 162, 162);
+    color: white;
+    
+  }
+
+  .header-right {
+    float: center;
+  }
+
+  @media screen and (max-width: 500px) {
+    .header a {
+      float: none;
+      display: block;
+      text-align: left;
+    }
+
+    .header-right {
+      float: center;
+    }
+  }

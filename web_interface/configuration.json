@@ -1,0 +1,75 @@
+{
+    "globalOptions": {
+        "background": "#111111",
+        "colladaServer": "http://localhost:8001/",
+        "fixedFrame": "/base_link",
+        "url": "ws://192.168.1.67:9090",
+        "videoServer": "http://localhost:9999"
+    },
+    "sidebarOpened": true,
+    "displays": [{
+            "isShown": true,
+            "name": "Grid",
+            "options": {
+                "cellSize": "1",
+                "color": "#cccccc",
+                "numCells": "10"
+            },
+            "type": "grid"
+        },
+        {
+            "isShown": true,
+            "name": "Map",
+            "options": {
+                "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                },
+                "continuous": true,
+                "opacity": "1",
+                "topic": "/map"
+            },
+            "type": "occupancyGrid"
+        },
+        {
+            "isShown": true,
+            "name": "Interactive Markers",
+            "options": {
+                "topic": "/basic_controls"
+            },
+            "type": "interactiveMarkers"
+        },
+        {
+            "isShown": true,
+            "name": "Markers",
+            "options": {
+                "topic": "/visualization_marker"
+            },
+            "type": "markers"
+        },
+        {
+            "isShown": true,
+            "name": "Map",
+            "options": {
+                "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                },
+                "continuous": true,
+                "opacity": "1",
+                "topic": "/map"
+            },
+            "type": "occupancyGrid"
+        }
+    ]
+} {
+    "globalOptions": {
+        "background": "#111111",
+        "colladaLoader": "collada2",
+        "fixedFrame": "/base_link"
+    },
+    "sidebarOpened": true,
+    "displays": []
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>tf</title>
+    <script src="lib/jquery-3.3.1.js"></script>
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/page_header.css" />
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            height: calc(100% - 34.05px);
+        }
+        
+        button {
+            background-color: rgb(168, 168, 168);
+            color: white;
+            border: none;
+            height: 45px;
+            width: 45px;
+            /* padding: 10px 10px; */
+            font-size: 26px;
+        }
+        
+        button:hover {
+            color: rgba(180, 25, 25, 0.171);
+            background-color: rgba(247, 136, 84, 0.24);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="switch">
+            <input type="checkbox" name="toggle" z-index="-100">
+            <label for="toggle">
+          <i class="bulb">
+            <span class="bulb-center"></span>
+            <span class="reflections">  </span>
+        </i>    
+    </label>
+        </div>
+        <a></a>
+        <a></a>
+        <a href="#default" class="logo">PerceptBot</a>
+        <div class="header-right">
+            <a></a>
+            <a></a>
+            <a></a>
+            <a></a>
+            <a href="page_info.html" data-target="0">info</a>
+            <a></a>
+            <a></a>
+            <a href="page_rviz.html" data-target="-1">rviz</a>
+            <a></a>
+            <a></a> <a class="active" href="page_tf.html" data-target="1">TF</a>
+
+            <button class="button" id="open_script">⟲</button>
+            <script>
+                //TODO:
+                $('#open_script').click(function() {
+                    fetch("php/update_pdf.sh"); // http get to web server = http://hostname:port/update_pdf.sh
+                });
+            </script>
+        </div>
+    </div>
+    <div style="width: 100%; height: 100%">
+        <embed src="pdf/frames.pdf" type="application/pdf" width="100%" height="100%" />
+    </div>
+
+    <!-- Scripts -->
+    <script src="lib/main.js"></script>
+</body>
+
+</html>

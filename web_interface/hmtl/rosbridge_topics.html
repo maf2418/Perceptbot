@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title> rosbridge topics </title>
+    <script type="text/javascript" src="lib/easeljs.js"></script>
+    <script type="text/javascript" src="lib/eventemitter2.js"></script>
+    <script type="text/javascript" src="lib/roslib.js"></script>
+    <script type="text/javascript" src="lib/ros2d.js"></script>
+    <script type="text/javascript" src="lib/nav2d.js"></script>
+
+    <script type="text/javascript">
+        /**
+         * Setup all GUI elements when the page is loaded.
+         */
+        var ros = null; // global var
+
+        /**
+         * https://answers.ros.org/question/85701/get-list-of-topics-via-rosbridge-and-websocket/
+         */
+        function getTopics() { // search for '.getTopics' in roslib.js
+            ros.getTopics(
+                result => {
+                    console.log("Getting topics...");
+                    console.log(result);
+                },
+                e => {
+                    console.error(e);
+                }
+            );
+        }
+
+        /**
+         * http://docs.ros.org/hydro/api/rosapi/html/index-msg.html
+         * similar to rosapi/Topics, get rosapi/Nodes
+         */
+        function getNodes() {
+            ros.getNodes(
+                result => {
+                    console.log("Getting nodes...");
+                    console.log(result);
+                },
+                e => {
+                    console.error(e);
+                }
+            );
+        }
+
+        function getNodeDetails(node) {
+            ros.getNodeDetails(
+                node,
+                result => {
+                    console.log("Getting node details on: ", node);
+                    console.log(result);
+                },
+                e => {
+                    console.error(e);
+                }
+            );
+        }
+
+        function init() {
+            // Connect to ROS.
+            ros = new ROSLIB.Ros({
+                url: "ws://localhost:9090" // Robit-IP:rosbridge-port
+                    // url: 'ws://192.168.1.67:9090'
+            });
+            getNodeDetails("/rosout");
+            getTopics(); // -> console.log
+            getNodes();
+        }
+    </script>
+</head>
+
+<body onload="init()">
+    <h1>rostopic list</h1>
+    <div id="nav"></div>
+</body>
+
+</html>

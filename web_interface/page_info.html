@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>First</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/page_header.css" />
+</head>
+
+<body>
+    <div class="header">
+        <div class="switch">
+            <input type="checkbox" name="toggle" z-index="-100">
+            <label for="toggle">
+                <i class="bulb">
+                    <span class="bulb-center"></span>
+                    <span class="reflections">  </span>
+                </i>    
+            </label>
+        </div>
+        <a></a>
+        <a></a>
+        <a href="#default" class="logo">PerceptBot</a>
+        <div class="header-right">
+            <a></a>
+            <a></a>
+            <a></a>
+            <a></a>
+            <a></a>
+            <a class="active" href="page_info.html" data-target="0">info</a>
+            <a></a>
+            <a></a>
+            <a href="page_rviz.html" data-target="-1">rviz</a>
+            <a></a>
+            <a></a>
+            <a href="page_tf.html" data-target="1">TF</a>
+        </div>
+    </div>
+    <div style="padding-left:20px">
+        <p></p>
+        <p></p>
+    </div>
+    <div id="main">
+        <div id="joystick"></div>
+        <img src="images/perceptbot5.gif" width="1200">
+        <div class="sceneElement" data-viewport="-1"></div>
+
+        <!-- Scripts -->
+        <script src="lib/jquery-3.3.1.js"></script>
+        <script src="lib/sirv.js"></script>
+        <script src="lib/main.js"></script>
+    </div>
+</body>
+
+</html>

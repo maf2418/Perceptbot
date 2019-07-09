@@ -1,0 +1,11 @@
+<launch>
+  <!-- Map server -->
+  <node pkg="map_server" name="map_server" type="map_server"/>
+
+  <!-- AMCL -->
+  <!--<include file="$(find turtlebot3_navigation)/launch/amcl.launch"/>-->
+
+  <!-- move_base -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+  </node>
+</launch>

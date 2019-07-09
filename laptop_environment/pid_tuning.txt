@@ -1,0 +1,3 @@
+can tune pid by publishing topic as per the below. ks are in order: Ki, Kp, Kd
+
+rostopic pub -1 /PID_settings motion_control/PID_settings -- 1.0 0.25 0.0

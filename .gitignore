@@ -1,1 +1,5 @@
 *.swp
+laptop_environment/build/*
+laptop_environment/src/*
+laptop_environment/devel/*
+navigation_stack/*

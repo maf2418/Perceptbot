@@ -2,6 +2,8 @@
 
 This repository is the companion repository for the Project Perceptbot (paper forthcoming).
 
+![perceptbot](images/perceptbot.jpeg)
+
 ## Table of contents
 
 This project has been divided into several components, organised into the directories you can see above. For information specific to each part of the project (which were developed in parallel by different team members), see the individual READMEs within each directory.
